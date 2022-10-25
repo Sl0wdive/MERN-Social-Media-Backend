@@ -66,6 +66,10 @@ export const getOne = async (req, res) => {
   }
 };
 
+// export const getMy = async (req, res) => {
+
+// };
+
 export const remove = async (req, res) => {
 try {
 const postId = req.params.id;
@@ -175,7 +179,6 @@ export const removeLike = async (req, res) => {
   try {
     const likeId  = req.params.id;
     const postId  = req.params.id2;
-
     
   
     const like = await LikeModel.findById(likeId);

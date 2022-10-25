@@ -6,7 +6,7 @@ import fs from 'fs';
 import * as validation from './validations/Validation.js';
 import handleValidationErrors from './utils/handleValidationErrors.js';
 import chauth from './utils/chauth.js';
-import { PostControler, UserControler, CommentControler } from './controlers/index.js';
+import { PostControler, UserControler, CommentControler, ChatControler } from './controlers/index.js';
 
 mongoose.connect('mongodb+srv://admin:qwerty123456@cluster0.2tucftx.mongodb.net/blog?retryWrites=true&w=majority')
 .then(() => console.log('DB OK'))
@@ -49,6 +49,9 @@ app.delete('/:id', chauth, PostControler.remove);
 app.patch('/:id', chauth, validation.postNew, handleValidationErrors, PostControler.update);
 
 
+//app.get('/', chauth, PostControler.getMy); поки не потрібен
+
+
 app.post('/posts/:id', chauth, validation.commentNew, handleValidationErrors, CommentControler.create);
 app.get('/posts/:id', CommentControler.getAll);
 //app.get('/posts/:id', PostControler.getOne); поки не потрібен
@@ -57,6 +60,12 @@ app.delete('/posts/:id/:id2', CommentControler.remove);
 
 app.post('/like/:id', chauth, PostControler.like);
 app.delete('/like/:id/:id2', PostControler.removeLike);
+
+app.post('/follow/:id', chauth, UserControler.follow);
+app.delete('/follow/:id', chauth, UserControler.unfollow);
+
+app.post('/message/:id', chauth, ChatControler.sendMessage);
+app.get('/message/:id',validation.messagetNew,handleValidationErrors , ChatControler.getMessages);
 
 app.listen(4444, (err) => {
     if (err) {

@@ -21,3 +21,7 @@ export const postNew = [
 export const commentNew = [
     body('content', 'Enter any text').isLength({ min: 3}).isString(),
 ];
+
+export const messagetNew = [
+    body('content', 'Enter any text').isLength({ min: 1}).isString(),
+];

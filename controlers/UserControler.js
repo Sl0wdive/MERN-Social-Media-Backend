@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import UserModel from '../models/User.js';
+import FollowModel from '../models/Follow.js';
 
 export const register = async (req, res) => {
     try{
@@ -83,6 +84,7 @@ export const login = async (req, res) => {
 
 export const me = async (req, res) => {
     try {
+        
         const user = await UserModel.findById(req.userId);
         if(!user){
             return res.status(404).json({
@@ -98,5 +100,63 @@ export const me = async (req, res) => {
         res.status(500).json({
         message: "No access"
     });
+    }
+};
+
+export const follow = async (req, res) =>{
+    try {
+        const userId = req.userId;
+        const followId = req.params.id;
+      
+  
+        const doc = new FollowModel({
+          user: userId,
+          following: followId,
+        });
+        
+  
+        const follow = await doc.save();
+  
+        return res.json(follow);
+      } catch (err) {
+          console.log(err);
+          res.status(500).json({
+            message: 'Failed to follow user',
+          });
+      }
+};
+
+export const unfollow = async (req, res) => {
+try {
+    
+    const followingId = req.params.id;
+
+    
+    FollowModel.findOneAndDelete(
+        {
+            _id: followingId,
+        },
+        (err, doc) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    message: 'Failed to receive follow data',
+                });
+            }
+            if (!doc) {
+                return res.status(404).json({
+                    message: "Follow link does not exist"
+                });
+            }
+            res.json({
+                success: true,
+            });
+        },
+        );
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Failed to receive follow data',
+        });
     }
 };
