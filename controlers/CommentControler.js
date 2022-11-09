@@ -114,7 +114,7 @@ export const remove = async (req, res) => {
   
 };
   
-  export const update = async (req, res) => {
+export const update = async (req, res) => {
   try {
     const commentId = req.params.id;
   
