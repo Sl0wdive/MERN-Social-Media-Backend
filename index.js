@@ -9,7 +9,7 @@ import handleValidationErrors from './utils/handleValidationErrors.js';
 import chauth from './utils/chauth.js';
 import { PostControler, UserControler, CommentControler, ChatControler } from './controlers/index.js';
 
-mongoose.connect('mongodb+srv://admin:qwerty123456@cluster0.2tucftx.mongodb.net/blog?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => console.log('DB OK'))
 .catch((err) => console.log('DB ERROR', err));
 
@@ -69,7 +69,7 @@ app.delete('/follow/:id', chauth, UserControler.unfollow);
 app.post('/message/:id', chauth, ChatControler.sendMessage);
 app.get('/message/:id',validation.messagetNew,handleValidationErrors , ChatControler.getMessages);
 
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
     if (err) {
         return console.log(err);
     }
