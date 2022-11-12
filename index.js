@@ -45,20 +45,20 @@ app.post('/upload', chauth, upload.single('image'), (req, res) => {
 });
 
 app.get('/posts', PostControler.getAll);
-app.get('/:id', PostControler.getOne);
-app.post('/',chauth , validation.postNew,handleValidationErrors, PostControler.create);
-app.delete('/:id', chauth, PostControler.remove);
-app.patch('/:id', chauth, validation.postNew, handleValidationErrors, PostControler.update);
+app.get('/post/:id', PostControler.getOne);
+app.post('/post',chauth , validation.postNew,handleValidationErrors, PostControler.create);
+app.delete('/post/:id', chauth, PostControler.remove);
+app.patch('/post/:id', chauth, validation.postNew, handleValidationErrors, PostControler.update);
 
 
 //app.get('/', chauth, PostControler.getMy); поки не потрібен
 
 
-app.post('/posts/:id', chauth, validation.commentNew, handleValidationErrors, CommentControler.create);
-app.get('/posts/:id', CommentControler.getAll);
+app.post('/post/:id', chauth, validation.commentNew, handleValidationErrors, CommentControler.create);
+app.get('/post/:id', CommentControler.getAll);
 //app.get('/posts/:id', PostControler.getOne); поки не потрібен
-app.patch('/posts/:id', validation.commentNew, handleValidationErrors, CommentControler.update);
-app.delete('/posts/:id/:id2', CommentControler.remove);
+app.patch('/post/:id', validation.commentNew, handleValidationErrors, CommentControler.update);
+app.delete('/post/:id/:id2', CommentControler.remove);
 
 app.post('/like/:id', chauth, PostControler.like);
 app.delete('/like/:id/:id2', PostControler.removeLike);
