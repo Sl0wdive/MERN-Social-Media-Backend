@@ -54,11 +54,11 @@ app.patch('/post/:id', chauth, validation.postNew, handleValidationErrors, PostC
 //app.get('/', chauth, PostControler.getMy); поки не потрібен
 
 
-app.post('/post/:id', chauth, validation.commentNew, handleValidationErrors, CommentControler.create);
-app.get('/post/:id', CommentControler.getAll);
+app.post('/comment/:id', chauth, validation.commentNew, handleValidationErrors, CommentControler.create);
+app.get('/comment/:id', CommentControler.getAll);
 //app.get('/posts/:id', PostControler.getOne); поки не потрібен
-app.patch('/post/:id', validation.commentNew, handleValidationErrors, CommentControler.update);
-app.delete('/post/:id/:id2', CommentControler.remove);
+app.patch('/comment/:id', validation.commentNew, handleValidationErrors, CommentControler.update);
+app.delete('/comment/:id/:id2', CommentControler.remove);
 
 app.post('/like/:id', chauth, PostControler.like);
 app.delete('/like/:id/:id2', PostControler.removeLike);
