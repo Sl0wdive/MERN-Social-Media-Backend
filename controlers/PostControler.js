@@ -23,7 +23,8 @@ export const create = async (req, res) => {
 
 export const getAll = async (req, res) => {
   try {
-    const posts = await (await PostModel.find().populate('user').exec()).sort('createAt');
+    const posts = await PostModel.find().populate('user').exec();
+    posts.reverse();
     res.json(posts);
   } catch (err) {
     console.log(err);
