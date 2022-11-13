@@ -16,7 +16,7 @@ export const create = async (req, res) => {
 
       await PostModel.findOneAndUpdate(
         {
-          id: postId,
+          id: req.params.id,
         },
         {
           $inc: { commentCount: 1 },
